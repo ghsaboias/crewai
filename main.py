@@ -11,7 +11,9 @@ agents = GameAgents()
 
 print("## Welcome to the Game Crew")
 print('-------------------------------')
-game = input("What is the game you would like to build? What will be the mechanics?\n")
+game_name = input("What is the name of the game you would like to build?\n")
+game_instructions = input("What will be the mechanics?\n")
+game = f"{game_name}: {game_instructions}"
 
 # Create Agents
 senior_engineer_agent = agents.senior_engineer_agent()
@@ -25,27 +27,30 @@ approve_game = tasks.evaluate_task(chief_qa_engineer_agent, game)
 
 # Create Crew responsible for Copy
 crew = Crew(
-	agents=[
-		senior_engineer_agent,
-		qa_engineer_agent,
-		chief_qa_engineer_agent
-	],
-	tasks=[
-		code_game,
-		review_game,
-		approve_game
-	],
-	verbose=True
+    agents=[
+        senior_engineer_agent,
+        qa_engineer_agent,
+        chief_qa_engineer_agent
+    ],
+    tasks=[
+        code_game,
+        review_game,
+        approve_game
+    ],
+    verbose=True
 )
 
-game = crew.kickoff()
+game_code = crew.kickoff()
 
+# Generate file name from the game name
+file_name = game_name.lower().replace(' ', '_') + '.py'
 
 # Print results
 print("\n\n########################")
 print("## Here is the result")
 print("########################\n")
 print("final code for the game:")
-# save the code to a file
-with open('guess_flag.py', 'w') as f:
-    f.write(game)
+
+# Save the code to a file with the dynamic name
+with open(file_name, 'w') as f:
+    f.write(game_code)
