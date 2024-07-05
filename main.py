@@ -47,5 +47,5 @@ print("## Here is the result")
 print("########################\n")
 print("final code for the game:")
 # save the code to a file
-with open('game.py', 'w') as f:
+with open('guess_flag.py', 'w') as f:
     f.write(game)
